@@ -29,10 +29,13 @@ jobs:
       - name: Configure Docker
         run: gcloud auth configure-docker us-central1-docker.pkg.dev
 
+      - name: Install GKE auth plugin
+        run: |
+          gcloud components install gke-gcloud-auth-plugin --quiet
+
       - name: Get GKE credentials
         run: |
-          gcloud container clusters get-credentials $GKE_CLUSTER \
-            --zone $GKE_ZONE
+          gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE
 
       # BACKEND
 
@@ -46,8 +49,7 @@ jobs:
 
       - name: Deploy backend
         run: |
-          kubectl set image deployment/todo-backend \
-          todo-backend=us-central1-docker.pkg.dev/$PROJECT_ID/todo-repo/todo-backend:${{ github.sha }}
+          kubectl set image deployment/todo-backend todo-backend=us-central1-docker.pkg.dev/$PROJECT_ID/todo-repo/todo-backend:${{ github.sha }}
 
       # FRONTEND
 
@@ -61,8 +63,7 @@ jobs:
 
       - name: Deploy frontend
         run: |
-          kubectl set image deployment/todo-frontend \
-          todo-frontend=us-central1-docker.pkg.dev/$PROJECT_ID/todo-repo/todo-frontend:${{ github.sha }}
+          kubectl set image deployment/todo-frontend todo-frontend=us-central1-docker.pkg.dev/$PROJECT_ID/todo-repo/todo-frontend:${{ github.sha }}
 
       - name: Verify rollout
         run: |
