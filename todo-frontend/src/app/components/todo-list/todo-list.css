@@ -1,0 +1,64 @@
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+.todo-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+input {
+  padding: 10px;
+  flex: 1;
+}
+
+button {
+  padding: 10px 14px;
+  cursor: pointer;
+  border: none;
+  background-color: #2563eb;
+  color: white;
+  border-radius: 4px;
+}
+
+button.delete {
+  background-color: #dc2626;
+  margin-left: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #f3f4f6;
+}
+
+select {
+  padding: 10px;
+}
+
+.filter-box {
+  margin-bottom: 20px;
+}
+
+.tabs {
+  margin: 20px 0;
+  display: flex;
+  gap: 10px;
+}

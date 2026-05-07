@@ -1,0 +1,45 @@
+<div *ngIf="authService.isLoggedIn(); else loginPage" class="min-h-screen bg-slate-100">
+  <div class="max-w-6xl mx-auto px-4 py-6">
+
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold text-slate-800">
+        Cloud To-Do Dashboard
+      </h1>
+
+      <button
+        (click)="logout()"
+        class="bg-red-600 text-white px-5 py-2 rounded-xl font-semibold shadow transition active:scale-95 hover:bg-red-700"
+      >
+        Logout
+      </button>
+    </div>
+
+    <!-- ADD THIS -->
+    <div class="flex gap-3 mb-6">
+      <button
+        type="button"
+        (click)="activePage = 'tasks'"
+        class="bg-blue-600 text-white px-5 py-2 rounded-xl font-semibold shadow transition hover:bg-blue-700 active:scale-95"
+      >
+        Tasks
+      </button>
+
+      <button
+        type="button"
+        (click)="activePage = 'profile'"
+        class="bg-slate-700 text-white px-5 py-2 rounded-xl font-semibold shadow transition hover:bg-slate-800 active:scale-95"
+      >
+        Profile
+      </button>
+    </div>
+
+    <app-todo-list *ngIf="activePage === 'tasks'"></app-todo-list>
+
+    <app-profile *ngIf="activePage === 'profile'"></app-profile>
+
+  </div>
+</div>
+
+<ng-template #loginPage>
+  <app-login></app-login>
+</ng-template>

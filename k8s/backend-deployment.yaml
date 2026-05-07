@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: todo-backend
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: todo-backend
+
+  template:
+    metadata:
+      labels:
+        app: todo-backend
+
+    spec:
+      containers:
+        - name: todo-backend
+
+          image: us-central1-docker.pkg.dev/cisc5550-491409/todo-repo/todo-backend:v3
+
+          ports:
+            - containerPort: 3000
+
+          envFrom:
+            - secretRef:
+                name: backend-secret
+
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /secrets/google-key.json
+
+          volumeMounts:
+            - name: google-credentials
+              mountPath: /secrets
+              readOnly: true
+
+      volumes:
+        - name: google-credentials
+          secret:
+            secretName: google-credentials

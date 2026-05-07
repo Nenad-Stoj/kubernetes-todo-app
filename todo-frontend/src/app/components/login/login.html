@@ -1,0 +1,45 @@
+<div class="min-h-screen flex items-center justify-center bg-slate-100 px-4">
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+    <h2 class="text-3xl font-bold text-slate-800 text-center mb-2">
+      Welcome Back
+    </h2>
+
+    <p class="text-slate-500 text-center mb-6">
+      Login or create an account to manage your tasks.
+    </p>
+
+    <div class="space-y-4">
+      <input
+        type="text"
+        [(ngModel)]="username"
+        placeholder="Username"
+        class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+
+      <input
+        type="password"
+        [(ngModel)]="password"
+        placeholder="Password"
+        class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+
+      <button
+        (click)="login()"
+        class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold shadow-md transition active:scale-95 hover:bg-blue-700"
+      >
+        Login
+      </button>
+
+      <button
+        (click)="register()"
+        class="w-full bg-slate-800 text-white py-3 rounded-xl font-semibold shadow-md transition active:scale-95 hover:bg-slate-900"
+      >
+        Register
+      </button>
+
+      <p *ngIf="error" class="text-red-600 text-center font-medium">
+        {{ error }}
+      </p>
+    </div>
+  </div>
+</div>

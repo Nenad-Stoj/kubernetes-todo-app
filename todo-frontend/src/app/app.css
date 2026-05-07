@@ -1,0 +1,141 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f1f5f9;
+  margin: 0;
+  padding: 0;
+  color: #1e293b;
+}
+
+/* Main Layout */
+
+.container,
+.login-box {
+  max-width: 950px;
+  margin: 40px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* Titles */
+
+h1,
+h2 {
+  margin-bottom: 20px;
+  color: #0f172a;
+}
+
+/* Forms */
+
+.todo-form,
+.login-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input,
+select {
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 8px rgba(37,99,235,0.25);
+}
+
+/* Buttons */
+
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button.delete {
+  background: #dc2626;
+}
+
+button.delete:hover {
+  background: #b91c1c;
+}
+
+/* Tabs */
+
+.tabs {
+  display: flex;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+/* Tables */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th {
+  background: #2563eb;
+  color: white;
+  text-align: left;
+  padding: 14px;
+}
+
+td {
+  padding: 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+tr:hover {
+  background: #f8fafc;
+}
+
+/* Translation Text */
+
+.translation-box {
+  margin-top: 15px;
+  padding: 12px;
+  background: #eff6ff;
+  border-left: 4px solid #2563eb;
+  border-radius: 6px;
+}
+
+/* Errors */
+
+.error {
+  color: #dc2626;
+  font-weight: bold;
+}
+
+/* Logout Button */
+
+.logout-btn {
+  float: right;
+  margin-bottom: 15px;
+}
