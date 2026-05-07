@@ -1,0 +1,70 @@
+name: Deploy to GKE
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  GKE_CLUSTER: ${{ secrets.GKE_CLUSTER }}
+  GKE_ZONE: ${{ secrets.GKE_ZONE }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev
+
+      - name: Get GKE credentials
+        run: |
+          gcloud container clusters get-credentials $GKE_CLUSTER \
+            --zone $GKE_ZONE
+
+      # BACKEND
+
+      - name: Build backend image
+        run: |
+          docker build -t us-central1-docker.pkg.dev/$PROJECT_ID/todo-repo/todo-backend:${{ github.sha }} ./todo-backend
+
+      - name: Push backend image
+        run: |
+          docker push us-central1-docker.pkg.dev/$PROJECT_ID/todo-repo/todo-backend:${{ github.sha }}
+
+      - name: Deploy backend
+        run: |
+          kubectl set image deployment/todo-backend \
+          todo-backend=us-central1-docker.pkg.dev/$PROJECT_ID/todo-repo/todo-backend:${{ github.sha }}
+
+      # FRONTEND
+
+      - name: Build frontend image
+        run: |
+          docker build -t us-central1-docker.pkg.dev/$PROJECT_ID/todo-repo/todo-frontend:${{ github.sha }} ./todo-frontend
+
+      - name: Push frontend image
+        run: |
+          docker push us-central1-docker.pkg.dev/$PROJECT_ID/todo-repo/todo-frontend:${{ github.sha }}
+
+      - name: Deploy frontend
+        run: |
+          kubectl set image deployment/todo-frontend \
+          todo-frontend=us-central1-docker.pkg.dev/$PROJECT_ID/todo-repo/todo-frontend:${{ github.sha }}
+
+      - name: Verify rollout
+        run: |
+          kubectl rollout status deployment/todo-backend
+          kubectl rollout status deployment/todo-frontend
